@@ -40,7 +40,7 @@ class UsuarioDaoTest {
     }
 
     @Test
-    void naoRetornarTodosUsuariosCadastrados() {
+    void deveRetornarTodosUsuariosCadastrados() {
         createUserToTest("fulano", "fulano@gmail.com", "password");
         createUserToTest("ciclano", "ciclano@gmail.com", "password");
         createUserToTest("beltrano", "beltrano@gmail.com", "password");
@@ -49,8 +49,16 @@ class UsuarioDaoTest {
         Assertions.assertEquals(3, users.size());
     }
 
-    private void createUserToTest(String name, String email, String password) {
+    @Test
+    void deveDeletarUmUsuario() {
+        Usuario user = createUserToTest("fulano", "fulano@gmail.com", "password");
+        this.userDao.deletar(user);
+        Assertions.assertThrows(NoResultException.class, () -> this.userDao.buscarPorUsername("fulano"));
+    }
+
+    private Usuario createUserToTest(String name, String email, String password) {
         Usuario testUser = new Usuario(name, email, password);
         em.persist(testUser);
+        return testUser;
     }
 }

@@ -182,4 +182,10 @@ public class Leilao {
 		return !this.lances.isEmpty();
 	}
 
+	@Override
+	public String toString() {
+		return "Leilao{" +
+				"id=" + id +
+				'}';
+	}
 }
